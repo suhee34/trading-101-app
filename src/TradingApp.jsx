@@ -1309,7 +1309,7 @@ export default function TradingApp() {
                 <button onClick={() => setView('lesson')} className="flex items-center gap-1 text-slate-400 hover:text-white mb-4 text-sm">
                   <ChevronLeft size={16} /> Буцах
                 </button>
-                <h1 className="text-3xl font-black mb-2"> Тест</h1>
+                <h1 className="text-3xl font-black mb-2">Тест</h1>
                 <p className="text-slate-400 mb-6">{currentLesson.title}</p>
                 <div className="space-y-4">
                   {currentLesson.quiz.map((q, qi) => (
@@ -1538,7 +1538,7 @@ export default function TradingApp() {
             {/* PROGRESS */}
             {view === 'progress' && (
               <div>
-                <h1 className="text-3xl font-black mb-2">Миний прогресс </h1>
+                <h1 className="text-3xl font-black mb-2">Миний прогресс</h1>
                 <p className="text-slate-400 mb-6">Сурах аяллын явц</p>
                 <div className="bg-gradient-to-br from-white/10 to-zinc-800/30 border border-white/20 rounded-2xl p-6 mb-5">
                   <div className="text-sm text-slate-300 mb-2">Нийт прогресс</div>
@@ -1553,17 +1553,19 @@ export default function TradingApp() {
                     const p = progress[l.id];
                     return (
                       <div key={l.id} className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 flex items-center gap-3">
-                        <div className="text-2xl">{l.icon}</div>
-                        <div className="flex-1">
+                        <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                          <l.icon size={18} className="text-zinc-200" strokeWidth={1.5} />
+                        </div>
+                        <div className="flex-1 min-w-0">
                           <div className="text-xs text-slate-500">{l.level}</div>
-                          <div className="font-medium">{l.title}</div>
+                          <div className="font-medium truncate">{l.title}</div>
                           {p?.completed ? (
-                            <div className="text-xs text-zinc-200"> Дууссан • {p.score}/{p.total}</div>
+                            <div className="text-xs text-emerald-400 flex items-center gap-1"><CheckCircle size={12} /> Дууссан • {p.score}/{p.total}</div>
                           ) : (
                             <div className="text-xs text-slate-500">{isLessonUnlocked(i) ? 'Эхлээгүй' : 'Хаалттай'}</div>
                           )}
                         </div>
-                        {p?.completed && <Award className="text-zinc-200" size={20} />}
+                        {p?.completed && <Award className="text-zinc-200 flex-shrink-0" size={20} />}
                       </div>
                     );
                   })}
