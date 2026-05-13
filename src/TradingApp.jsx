@@ -1319,20 +1319,22 @@ export default function TradingApp() {
                         {q.options.map((opt, oi) => {
                           const selected = quizAnswers[qi] === oi;
                           const isCorrect = oi === q.correct;
-                          let cls = 'border-slate-700 hover:bg-slate-800';
+                          let cls = 'border-slate-700 hover:bg-slate-800 text-slate-200';
                           if (quizSubmitted) {
-                            if (isCorrect) cls = 'border-white bg-white/5';
-                            else if (selected) cls = 'border-zinc-500 bg-white/5';
+                            if (isCorrect) cls = 'border-emerald-500/60 bg-emerald-500/10 text-emerald-300';
+                            else if (selected) cls = 'border-red-500/60 bg-red-500/10 text-red-300';
+                            else cls = 'border-slate-800 text-slate-500';
                           } else if (selected) {
-                            cls = 'border-white bg-white/5';
+                            cls = 'border-white bg-white/5 text-white';
                           }
                           return (
                             <button key={oi}
                               onClick={() => !quizSubmitted && setQuizAnswers({ ...quizAnswers, [qi]: oi })}
                               disabled={quizSubmitted}
-                              className={`w-full text-left px-4 py-3 border rounded-xl transition-all ${cls}`}>
-                              {opt}
-                              {quizSubmitted && isCorrect && ' '}
+                              className={`w-full text-left px-4 py-3 border rounded-xl transition-all flex items-center justify-between gap-2 ${cls}`}>
+                              <span>{opt}</span>
+                              {quizSubmitted && isCorrect && <CheckCircle size={16} className="flex-shrink-0" />}
+                              {quizSubmitted && selected && !isCorrect && <X size={16} className="flex-shrink-0" />}
                             </button>
                           );
                         })}
@@ -1352,10 +1354,14 @@ export default function TradingApp() {
                       const correct = currentLesson.quiz.filter((q, i) => quizAnswers[i] === q.correct).length;
                       const passed = correct / currentLesson.quiz.length >= 0.7;
                       return (
-                        <div className={`p-6 rounded-2xl border text-center ${passed ? 'bg-white/5 border-white/20' : 'bg-white/5 border-white/20'}`}>
-                          <div className="text-5xl mb-2">{passed ? '' : ''}</div>
+                        <div className={`p-6 rounded-2xl border text-center ${passed ? 'bg-emerald-500/10 border-emerald-500/40' : 'bg-red-500/10 border-red-500/40'}`}>
+                          <div className="flex justify-center mb-3">
+                            {passed
+                              ? <CheckCircle size={42} className="text-emerald-400" strokeWidth={1.5} />
+                              : <AlertTriangle size={42} className="text-red-400" strokeWidth={1.5} />}
+                          </div>
                           <div className="text-2xl font-bold mb-1">{correct}/{currentLesson.quiz.length} зөв</div>
-                          <div className={`text-sm mb-4 ${passed ? 'text-zinc-200' : 'text-zinc-300'}`}>
+                          <div className={`text-sm mb-4 ${passed ? 'text-emerald-300' : 'text-red-300'}`}>
                             {passed ? 'Гайхалтай! Дараагийн хичээл нээгдлээ.' : 'Дахин уншаад туршаад үзээрэй (70%+ хэрэгтэй).'}
                           </div>
                           <div className="flex gap-2 justify-center">
