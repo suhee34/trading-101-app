@@ -231,8 +231,8 @@ export default function TradingApp() {
       title: 'The Candlestick Trading Bible',
       author: 'Munehisa Homma уламжлал дээр үндэслэсэн',
       icon: '🕯️',
-      color: 'from-amber-500/20 to-orange-700/10',
-      borderColor: 'border-amber-500/30',
+      color: 'from-white/10 to-zinc-800/30',
+      borderColor: 'border-white/20',
       description: 'Лаан график паттернууд болон price action арилжааны бүрэн гарын авлага',
       chapters: [
         {
@@ -285,8 +285,8 @@ export default function TradingApp() {
       title: 'Элиотын Давалгааны Онол',
       author: 'Ralph Nelson Elliott',
       icon: '🌊',
-      color: 'from-blue-500/20 to-cyan-700/10',
-      borderColor: 'border-blue-500/30',
+      color: 'from-white/10 to-zinc-800/30',
+      borderColor: 'border-white/20',
       description: 'Зах зээлийн давтамжит давалгаан хэлбэрийг таних бүрэн гарын авлага',
       chapters: [
         {
@@ -918,7 +918,7 @@ export default function TradingApp() {
     <button
       onClick={() => { setView(target); setMenuOpen(false); }}
       className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all w-full text-left ${
-        view === target ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' : 'text-slate-300 hover:bg-slate-800'
+        view === target ? 'bg-white text-zinc-900 shadow-lg shadow-white/10' : 'text-slate-300 hover:bg-slate-800'
       }`}
     >
       <Icon size={20} />
@@ -941,36 +941,36 @@ export default function TradingApp() {
     return (
       <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
         <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <Calculator className="text-emerald-400" size={24} />
+          <Calculator className="text-zinc-200" size={24} />
           Position Size тооцоологч
         </h3>
         <div className="space-y-3">
           <div>
             <label className="text-sm text-slate-400">Дансны хэмжээ ($)</label>
             <input type="number" value={account} onChange={e => setAccount(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-emerald-500 outline-none"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-white outline-none"/>
           </div>
           <div>
             <label className="text-sm text-slate-400">Эрсдэл (%)</label>
             <input type="number" step="0.1" value={riskPct} onChange={e => setRiskPct(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-emerald-500 outline-none"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-white outline-none"/>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="text-sm text-slate-400">Орох үнэ</label>
               <input type="number" value={entry} onChange={e => setEntry(+e.target.value)}
-                className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-emerald-500 outline-none"/>
+                className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-white outline-none"/>
             </div>
             <div>
               <label className="text-sm text-slate-400">Stop Loss</label>
               <input type="number" value={stopLoss} onChange={e => setStopLoss(+e.target.value)}
-                className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-emerald-500 outline-none"/>
+                className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:border-white outline-none"/>
             </div>
           </div>
         </div>
-        <div className="mt-5 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+        <div className="mt-5 p-4 bg-white/5 border border-white/20 rounded-xl">
           <div className="text-sm text-slate-400">Эрсдэлийн дүн</div>
-          <div className="text-2xl font-bold text-emerald-400">${riskAmount.toFixed(2)}</div>
+          <div className="text-2xl font-bold text-zinc-200">${riskAmount.toFixed(2)}</div>
           <div className="text-sm text-slate-400 mt-2">Position size (нэгж)</div>
           <div className="text-2xl font-bold text-white">{positionSize.toFixed(2)}</div>
           <div className="text-sm text-slate-400 mt-2">Position-ы үнэ</div>
@@ -993,39 +993,39 @@ export default function TradingApp() {
     return (
       <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
         <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <TrendingUp className="text-emerald-400" size={24} />
+          <TrendingUp className="text-zinc-200" size={24} />
           Risk/Reward тооцоологч
         </h3>
         <div className="space-y-3">
           <div>
             <label className="text-sm text-slate-400">Орох үнэ</label>
             <input type="number" value={entry} onChange={e => setEntry(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
           <div>
             <label className="text-sm text-slate-400">Stop Loss</label>
             <input type="number" value={sl} onChange={e => setSl(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
           <div>
             <label className="text-sm text-slate-400">Take Profit</label>
             <input type="number" value={tp} onChange={e => setTp(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3">
-          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
+          <div className="p-3 bg-white/5 border border-white/20 rounded-xl">
             <div className="text-xs text-slate-400">Эрсдэл</div>
-            <div className="text-xl font-bold text-red-400">${risk.toFixed(2)}</div>
+            <div className="text-xl font-bold text-zinc-300">${risk.toFixed(2)}</div>
           </div>
-          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+          <div className="p-3 bg-white/5 border border-white/20 rounded-xl">
             <div className="text-xs text-slate-400">Боломжит ашиг</div>
-            <div className="text-xl font-bold text-emerald-400">${reward.toFixed(2)}</div>
+            <div className="text-xl font-bold text-zinc-200">${reward.toFixed(2)}</div>
           </div>
         </div>
-        <div className={`mt-3 p-4 rounded-xl border ${isGood ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-amber-500/10 border-amber-500/30'}`}>
+        <div className={`mt-3 p-4 rounded-xl border ${isGood ? 'bg-white/5 border-white/20' : 'bg-white/5 border-white/20'}`}>
           <div className="text-sm text-slate-400">R:R харьцаа</div>
-          <div className={`text-3xl font-bold ${isGood ? 'text-emerald-400' : 'text-amber-400'}`}>1 : {ratio}</div>
+          <div className={`text-3xl font-bold ${isGood ? 'text-zinc-200' : 'text-zinc-300'}`}>1 : {ratio}</div>
           <div className="text-xs text-slate-400 mt-1">
             {isGood ? '✓ Сайн харьцаа (1:2 ба түүнээс дээш)' : '⚠️ 1:2-оос доош — анхааралтай'}
           </div>
@@ -1047,42 +1047,42 @@ export default function TradingApp() {
     return (
       <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
         <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-          <Calculator className="text-emerald-400" size={24} />
+          <Calculator className="text-zinc-200" size={24} />
           Profit/Loss тооцоологч
         </h3>
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
             <button onClick={() => setType('long')}
-              className={`py-2 rounded-lg font-medium ${type === 'long' ? 'bg-emerald-500 text-white' : 'bg-slate-900 text-slate-400'}`}>
+              className={`py-2 rounded-lg font-medium ${type === 'long' ? 'bg-white text-zinc-900' : 'bg-slate-900 text-slate-400'}`}>
               ⬆️ Long
             </button>
             <button onClick={() => setType('short')}
-              className={`py-2 rounded-lg font-medium ${type === 'short' ? 'bg-red-500 text-white' : 'bg-slate-900 text-slate-400'}`}>
+              className={`py-2 rounded-lg font-medium ${type === 'short' ? 'bg-zinc-700 text-white' : 'bg-slate-900 text-slate-400'}`}>
               ⬇️ Short
             </button>
           </div>
           <div>
             <label className="text-sm text-slate-400">Орох үнэ</label>
             <input type="number" value={entry} onChange={e => setEntry(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
           <div>
             <label className="text-sm text-slate-400">Гарах үнэ</label>
             <input type="number" value={exit} onChange={e => setExit(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
           <div>
             <label className="text-sm text-slate-400">Position size (нэгж)</label>
             <input type="number" value={size} onChange={e => setSize(+e.target.value)}
-              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-emerald-500"/>
+              className="w-full mt-1 px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white"/>
           </div>
         </div>
-        <div className={`mt-5 p-4 rounded-xl border ${isProfit ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-red-500/10 border-red-500/30'}`}>
+        <div className={`mt-5 p-4 rounded-xl border ${isProfit ? 'bg-white/5 border-white/20' : 'bg-white/5 border-white/20'}`}>
           <div className="text-sm text-slate-400">{isProfit ? 'Ашиг' : 'Алдагдал'}</div>
-          <div className={`text-3xl font-bold ${isProfit ? 'text-emerald-400' : 'text-red-400'}`}>
+          <div className={`text-3xl font-bold ${isProfit ? 'text-zinc-200' : 'text-zinc-300'}`}>
             {isProfit ? '+' : ''}{pnl.toFixed(2)} $
           </div>
-          <div className={`text-sm font-medium ${isProfit ? 'text-emerald-400' : 'text-red-400'}`}>
+          <div className={`text-sm font-medium ${isProfit ? 'text-zinc-200' : 'text-zinc-300'}`}>
             {isProfit ? '+' : ''}{pnlPct}%
           </div>
         </div>
@@ -1098,7 +1098,7 @@ export default function TradingApp() {
   }, {});
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-zinc-950 to-zinc-900 text-white">
 
       <div className="flex min-h-screen relative">
         {/* Mobile menu overlay */}
@@ -1110,7 +1110,7 @@ export default function TradingApp() {
         <aside className={`fixed lg:sticky top-0 left-0 h-screen w-72 bg-slate-900/95 backdrop-blur border-r border-slate-800 p-5 z-40 transition-transform overflow-y-auto flex-shrink-0 ${menuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-zinc-200 to-zinc-400 flex items-center justify-center">
                 <TrendingUp size={22} className="text-white" />
               </div>
               <div>
@@ -1136,7 +1136,7 @@ export default function TradingApp() {
             <div className="text-xs text-slate-400 mb-1">Ерөнхий прогресс</div>
             <div className="text-2xl font-bold mb-2">{completedCount}/{lessons.length}</div>
             <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style={{ width: `${overallProgress}%` }} />
+              <div className="h-full bg-gradient-to-r from-zinc-200 to-zinc-400 transition-all" style={{ width: `${overallProgress}%` }} />
             </div>
           </div>
         </aside>
@@ -1154,12 +1154,12 @@ export default function TradingApp() {
             {/* HOME */}
             {view === 'home' && (
               <div className="space-y-6">
-                <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-700/10 border border-emerald-500/30 rounded-3xl p-6 sm:p-8">
+                <div className="bg-gradient-to-br from-white/10 to-zinc-800/30 border border-white/20 rounded-3xl p-6 sm:p-8">
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-3">Тавтай морил! 👋</h1>
                   <p className="text-base sm:text-lg text-slate-300 mb-6">Анхан шатнаас Элиотын давалгаа хүртэл — арилжааны бүрэн академи.</p>
                   <div className="flex flex-wrap gap-3">
                     <button onClick={() => setView('lessons')}
-                      className="px-5 sm:px-6 py-3 bg-emerald-500 hover:bg-emerald-400 rounded-xl font-bold transition-all shadow-lg shadow-emerald-500/30 text-sm sm:text-base">
+                      className="px-5 sm:px-6 py-3 bg-white hover:bg-zinc-200 text-zinc-900 rounded-xl font-bold transition-all shadow-lg shadow-white/20 text-sm sm:text-base">
                       Сурч эхлэх →
                     </button>
                     <button onClick={() => setView('library')}
@@ -1171,50 +1171,50 @@ export default function TradingApp() {
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                   <button onClick={() => setView('lessons')} className="bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-2xl p-5 text-left transition-all">
-                    <BookOpen className="text-emerald-400 mb-3" size={24} />
+                    <BookOpen className="text-zinc-200 mb-3" size={24} />
                     <div className="font-bold mb-1">{lessons.length} хичээл</div>
                     <div className="text-xs text-slate-400">3 шатанд</div>
                   </button>
                   <button onClick={() => setView('library')} className="bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-2xl p-5 text-left transition-all">
-                    <Library className="text-amber-400 mb-3" size={24} />
+                    <Library className="text-zinc-300 mb-3" size={24} />
                     <div className="font-bold mb-1">{books.length} ном</div>
                     <div className="text-xs text-slate-400">Бүрэн орчуулга</div>
                   </button>
                   <button onClick={() => setView('calc')} className="bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-2xl p-5 text-left transition-all">
-                    <Calculator className="text-blue-400 mb-3" size={24} />
+                    <Calculator className="text-zinc-300 mb-3" size={24} />
                     <div className="font-bold mb-1">3 тооцоологч</div>
                     <div className="text-xs text-slate-400">Position, R:R, P&L</div>
                   </button>
                   <button onClick={() => setView('glossary')} className="bg-slate-800/50 hover:bg-slate-800 border border-slate-700 rounded-2xl p-5 text-left transition-all">
-                    <FileText className="text-purple-400 mb-3" size={24} />
+                    <FileText className="text-zinc-300 mb-3" size={24} />
                     <div className="font-bold mb-1">{glossary.length}+ нэр томъёо</div>
                     <div className="text-xs text-slate-400">Хайлттай</div>
                   </button>
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-4">
-                  <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-700/5 border border-emerald-500/20 rounded-2xl p-5">
+                  <div className="bg-gradient-to-br from-white/5 to-zinc-800/20 border border-white/10 rounded-2xl p-5">
                     <div className="text-3xl mb-2">🎓</div>
                     <h3 className="font-bold mb-2">Анхан шат</h3>
                     <p className="text-sm text-slate-400">Зах зээл, нэр томьёо, эрсдэлийн менежмент</p>
                   </div>
-                  <div className="bg-gradient-to-br from-amber-500/10 to-orange-700/5 border border-amber-500/20 rounded-2xl p-5">
+                  <div className="bg-gradient-to-br from-white/5 to-zinc-800/20 border border-white/10 rounded-2xl p-5">
                     <div className="text-3xl mb-2">🕯️</div>
                     <h3 className="font-bold mb-2">Дунд шат</h3>
                     <p className="text-sm text-slate-400">Лаан график паттернууд, price action</p>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-500/10 to-cyan-700/5 border border-blue-500/20 rounded-2xl p-5">
+                  <div className="bg-gradient-to-br from-white/5 to-zinc-800/20 border border-white/10 rounded-2xl p-5">
                     <div className="text-3xl mb-2">🌊</div>
                     <h3 className="font-bold mb-2">Ахисан шат</h3>
                     <p className="text-sm text-slate-400">Элиотын давалгаа, Фибоначчи</p>
                   </div>
                 </div>
 
-                <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-6">
+                <div className="bg-white/5 border border-white/20 rounded-2xl p-6">
                   <div className="flex items-start gap-3">
-                    <AlertTriangle className="text-amber-400 flex-shrink-0 mt-1" size={24} />
+                    <AlertTriangle className="text-zinc-300 flex-shrink-0 mt-1" size={24} />
                     <div>
-                      <h3 className="font-bold text-amber-200 mb-2">Чухал анхааруулга</h3>
+                      <h3 className="font-bold text-zinc-100 mb-2">Чухал анхааруулга</h3>
                       <p className="text-sm text-slate-300 leading-relaxed">
                         Арилжаа нь өндөр эрсдэлтэй үйл ажиллагаа юм. Бодит мөнгөөр арилжаа хийхээсээ өмнө demo дансаар сайн дадлага хийж, зөвхөн алдаж болох мөнгөөрөө л арилжаалаарай.
                       </p>
@@ -1246,13 +1246,13 @@ export default function TradingApp() {
                               onClick={() => unlocked && startLesson(lesson)}
                               disabled={!unlocked}
                               className={`bg-slate-800/50 border rounded-2xl p-5 text-left transition-all flex items-center gap-4 ${
-                                unlocked ? 'hover:bg-slate-800 hover:border-emerald-500/50 border-slate-700 cursor-pointer' : 'border-slate-800 opacity-50 cursor-not-allowed'
+                                unlocked ? 'hover:bg-slate-800 hover:border-white/50 border-slate-700 cursor-pointer' : 'border-slate-800 opacity-50 cursor-not-allowed'
                               }`}>
                               <div className="text-4xl">{lesson.icon}</div>
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
                                   <span className="text-xs text-slate-500">Хичээл {idx + 1}</span>
-                                  {completed && <CheckCircle size={14} className="text-emerald-400" />}
+                                  {completed && <CheckCircle size={14} className="text-zinc-200" />}
                                   {!unlocked && <Lock size={14} className="text-slate-500" />}
                                 </div>
                                 <div className="font-bold text-lg">{lesson.title}</div>
@@ -1279,11 +1279,11 @@ export default function TradingApp() {
                 <h1 className="text-2xl sm:text-3xl font-black mb-2 break-words">{currentLesson.title}</h1>
                 <div className="flex gap-1 mb-6">
                   {currentLesson.steps.map((_, i) => (
-                    <div key={i} className={`h-1 flex-1 rounded-full ${i <= currentStep ? 'bg-emerald-500' : 'bg-slate-700'}`} />
+                    <div key={i} className={`h-1 flex-1 rounded-full ${i <= currentStep ? 'bg-white' : 'bg-slate-700'}`} />
                   ))}
                 </div>
                 <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 sm:p-6 lg:p-8 mb-6 overflow-hidden">
-                  <h2 className="text-lg sm:text-xl font-bold mb-4 text-emerald-400 break-words">{currentLesson.steps[currentStep].title}</h2>
+                  <h2 className="text-lg sm:text-xl font-bold mb-4 text-zinc-200 break-words">{currentLesson.steps[currentStep].title}</h2>
                   <div className="text-slate-300 leading-relaxed whitespace-pre-line text-[15px] sm:text-base break-words">{currentLesson.steps[currentStep].content}</div>
                 </div>
                 <div className="flex justify-between gap-2 sm:gap-3">
@@ -1292,7 +1292,7 @@ export default function TradingApp() {
                     ← Өмнөх
                   </button>
                   <button onClick={nextStep}
-                    className="flex-1 sm:flex-none px-4 sm:px-5 py-3 bg-emerald-500 hover:bg-emerald-400 rounded-xl font-medium text-sm sm:text-base">
+                    className="flex-1 sm:flex-none px-4 sm:px-5 py-3 bg-white hover:bg-zinc-200 text-zinc-900 rounded-xl font-medium text-sm sm:text-base">
                     {currentStep === currentLesson.steps.length - 1 ? 'Тест өгөх →' : 'Дараах →'}
                   </button>
                 </div>
@@ -1317,10 +1317,10 @@ export default function TradingApp() {
                           const isCorrect = oi === q.correct;
                           let cls = 'border-slate-700 hover:bg-slate-800';
                           if (quizSubmitted) {
-                            if (isCorrect) cls = 'border-emerald-500 bg-emerald-500/10';
-                            else if (selected) cls = 'border-red-500 bg-red-500/10';
+                            if (isCorrect) cls = 'border-white bg-white/5';
+                            else if (selected) cls = 'border-zinc-500 bg-white/5';
                           } else if (selected) {
-                            cls = 'border-emerald-500 bg-emerald-500/10';
+                            cls = 'border-white bg-white/5';
                           }
                           return (
                             <button key={oi}
@@ -1339,7 +1339,7 @@ export default function TradingApp() {
                 {!quizSubmitted ? (
                   <button onClick={submitQuiz}
                     disabled={Object.keys(quizAnswers).length < currentLesson.quiz.length}
-                    className="mt-6 w-full py-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-slate-700 disabled:cursor-not-allowed rounded-xl font-bold">
+                    className="mt-6 w-full py-4 bg-white hover:bg-zinc-200 text-zinc-900 disabled:bg-slate-700 disabled:cursor-not-allowed rounded-xl font-bold">
                     Хариу шалгах
                   </button>
                 ) : (
@@ -1348,10 +1348,10 @@ export default function TradingApp() {
                       const correct = currentLesson.quiz.filter((q, i) => quizAnswers[i] === q.correct).length;
                       const passed = correct / currentLesson.quiz.length >= 0.7;
                       return (
-                        <div className={`p-6 rounded-2xl border text-center ${passed ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-amber-500/10 border-amber-500/30'}`}>
+                        <div className={`p-6 rounded-2xl border text-center ${passed ? 'bg-white/5 border-white/20' : 'bg-white/5 border-white/20'}`}>
                           <div className="text-5xl mb-2">{passed ? '🎉' : '💪'}</div>
                           <div className="text-2xl font-bold mb-1">{correct}/{currentLesson.quiz.length} зөв</div>
-                          <div className={`text-sm mb-4 ${passed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                          <div className={`text-sm mb-4 ${passed ? 'text-zinc-200' : 'text-zinc-300'}`}>
                             {passed ? 'Гайхалтай! Дараагийн хичээл нээгдлээ.' : 'Дахин уншаад туршаад үзээрэй (70%+ хэрэгтэй).'}
                           </div>
                           <div className="flex gap-2 justify-center">
@@ -1360,7 +1360,7 @@ export default function TradingApp() {
                             </button>
                             {!passed && (
                               <button onClick={() => { setQuizAnswers({}); setQuizSubmitted(false); }}
-                                className="px-5 py-2 bg-amber-500 hover:bg-amber-400 rounded-xl text-slate-900 font-bold">
+                                className="px-5 py-2 bg-white hover:bg-zinc-200 rounded-xl text-slate-900 font-bold">
                                 Дахин оролдох
                               </button>
                             )}
@@ -1377,7 +1377,7 @@ export default function TradingApp() {
             {view === 'library' && (
               <div>
                 <h1 className="text-2xl sm:text-3xl font-black mb-2 flex items-center gap-2">
-                  <Library className="text-amber-400" size={28} />
+                  <Library className="text-zinc-300" size={28} />
                   Номын сан
                 </h1>
                 <p className="text-slate-400 mb-6 text-sm sm:text-base">Арилжааны сонгодог номнууд монгол хэлээр</p>
@@ -1427,7 +1427,7 @@ export default function TradingApp() {
                   <select 
                     value={currentChapter} 
                     onChange={e => setCurrentChapter(+e.target.value)}
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium outline-none focus:border-emerald-500 cursor-pointer"
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white font-medium outline-none focus:border-white cursor-pointer"
                   >
                     {currentBook.chapters.map((ch, i) => (
                       <option key={i} value={i}>
@@ -1444,14 +1444,14 @@ export default function TradingApp() {
                     <span>{currentChapter + 1} / {currentBook.chapters.length}</span>
                   </div>
                   <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all"
+                    <div className="h-full bg-gradient-to-r from-zinc-200 to-zinc-400 transition-all"
                       style={{ width: `${((currentChapter + 1) / currentBook.chapters.length) * 100}%` }} />
                   </div>
                 </div>
 
                 {/* Chapter content */}
                 <article className="bg-slate-800/30 border border-slate-700 rounded-2xl p-5 sm:p-7 md:p-8 lg:p-10 overflow-hidden">
-                  <div className="text-xs text-emerald-400 mb-2 font-medium">Бүлэг {currentChapter + 1}</div>
+                  <div className="text-xs text-zinc-200 mb-2 font-medium">Бүлэг {currentChapter + 1}</div>
                   <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-black mb-5 sm:mb-6 text-white break-words leading-tight">
                     {currentBook.chapters[currentChapter].title}
                   </h2>
@@ -1477,7 +1477,7 @@ export default function TradingApp() {
                   </button>
                   <button onClick={() => setCurrentChapter(Math.min(currentBook.chapters.length - 1, currentChapter + 1))}
                     disabled={currentChapter === currentBook.chapters.length - 1}
-                    className="flex-1 sm:flex-none px-3 sm:px-5 py-3 bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl font-medium flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base">
+                    className="flex-1 sm:flex-none px-3 sm:px-5 py-3 bg-white hover:bg-zinc-200 text-zinc-900 disabled:opacity-30 disabled:cursor-not-allowed rounded-xl font-medium flex items-center justify-center gap-1 sm:gap-2 text-sm sm:text-base">
                     <span>Дараах</span> <ChevronRight size={18} />
                   </button>
                 </div>
@@ -1506,14 +1506,14 @@ export default function TradingApp() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <input value={glossarySearch} onChange={e => setGlossarySearch(e.target.value)}
                     placeholder="Нэр томъёо хайх..."
-                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white outline-none focus:border-emerald-500"/>
+                    className="w-full pl-10 pr-4 py-3 bg-slate-800/50 border border-slate-700 rounded-xl text-white outline-none focus:border-white"/>
                 </div>
                 <div className="grid gap-3">
                   {filteredGlossary.length === 0 ? (
                     <div className="text-slate-500 text-center py-8">Олдсонгүй</div>
                   ) : filteredGlossary.map((g, i) => (
                     <div key={i} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5">
-                      <div className="font-bold text-emerald-400 mb-1">{g.term}</div>
+                      <div className="font-bold text-zinc-200 mb-1">{g.term}</div>
                       <div className="text-slate-300 text-sm">{g.def}</div>
                     </div>
                   ))}
@@ -1526,11 +1526,11 @@ export default function TradingApp() {
               <div>
                 <h1 className="text-3xl font-black mb-2">Миний прогресс 🏆</h1>
                 <p className="text-slate-400 mb-6">Сурах аяллын явц</p>
-                <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-700/10 border border-emerald-500/30 rounded-2xl p-6 mb-5">
+                <div className="bg-gradient-to-br from-white/10 to-zinc-800/30 border border-white/20 rounded-2xl p-6 mb-5">
                   <div className="text-sm text-slate-300 mb-2">Нийт прогресс</div>
                   <div className="text-4xl font-black mb-3">{Math.round(overallProgress)}%</div>
                   <div className="h-3 bg-slate-700/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-emerald-400 to-emerald-600 transition-all" style={{ width: `${overallProgress}%` }} />
+                    <div className="h-full bg-gradient-to-r from-zinc-200 to-zinc-400 transition-all" style={{ width: `${overallProgress}%` }} />
                   </div>
                   <div className="mt-3 text-sm text-slate-400">{completedCount} / {lessons.length} хичээл дууссан</div>
                 </div>
@@ -1544,12 +1544,12 @@ export default function TradingApp() {
                           <div className="text-xs text-slate-500">{l.level}</div>
                           <div className="font-medium">{l.title}</div>
                           {p?.completed ? (
-                            <div className="text-xs text-emerald-400">✓ Дууссан • {p.score}/{p.total}</div>
+                            <div className="text-xs text-zinc-200">✓ Дууссан • {p.score}/{p.total}</div>
                           ) : (
                             <div className="text-xs text-slate-500">{isLessonUnlocked(i) ? 'Эхлээгүй' : 'Хаалттай'}</div>
                           )}
                         </div>
-                        {p?.completed && <Award className="text-emerald-400" size={20} />}
+                        {p?.completed && <Award className="text-zinc-200" size={20} />}
                       </div>
                     );
                   })}
