@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BookOpen, Calculator, FileText, CheckCircle, TrendingUp, AlertTriangle, ChevronRight, ChevronLeft, Award, Search, Home, Menu, X, Lock, Library, BookMarked, Waves, BarChart3, Globe, Shield, Brain, Flame, Ruler, Hash, RefreshCw, ArrowUp, ArrowDown } from 'lucide-react';
+import { BookOpen, Calculator, FileText, CheckCircle, TrendingUp, AlertTriangle, ChevronRight, ChevronLeft, Award, Search, Home, Menu, X, Lock, Library, BookMarked, Waves, BarChart3, Globe, Shield, Brain, Flame, Ruler, Hash, RefreshCw, ArrowUp, ArrowDown, NotebookPen, Plus, Trash2 } from 'lucide-react';
 
 export default function TradingApp() {
   const [view, setView] = useState('home');
@@ -12,11 +12,15 @@ export default function TradingApp() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentBook, setCurrentBook] = useState(null);
   const [currentChapter, setCurrentChapter] = useState(0);
+  const [trades, setTrades] = useState([]);
+  const [addingTrade, setAddingTrade] = useState(false);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem('trading101_progress');
       if (raw) setProgress(JSON.parse(raw));
+      const tradesRaw = localStorage.getItem('trading101_trades');
+      if (tradesRaw) setTrades(JSON.parse(tradesRaw));
     } catch (e) {}
   }, []);
 
@@ -25,6 +29,22 @@ export default function TradingApp() {
     try {
       localStorage.setItem('trading101_progress', JSON.stringify(newProgress));
     } catch (e) { console.error('Save failed', e); }
+  };
+
+  const saveTrades = (newTrades) => {
+    setTrades(newTrades);
+    try {
+      localStorage.setItem('trading101_trades', JSON.stringify(newTrades));
+    } catch (e) { console.error('Save failed', e); }
+  };
+
+  const addTrade = (trade) => {
+    const newTrade = { ...trade, id: Date.now().toString() };
+    saveTrades([newTrade, ...trades]);
+  };
+
+  const deleteTrade = (id) => {
+    saveTrades(trades.filter(t => t.id !== id));
   };
 
   // ============ LESSONS (Анхан шат + Elliott + Candlestick) ============
@@ -1090,6 +1110,132 @@ export default function TradingApp() {
     );
   };
 
+  const TradeForm = ({ onCancel, onSave }) => {
+    const [symbol, setSymbol] = useState('');
+    const [direction, setDirection] = useState('long');
+    const [entry, setEntry] = useState('');
+    const [exit, setExit] = useState('');
+    const [size, setSize] = useState('');
+    const [stop, setStop] = useState('');
+    const [target, setTarget] = useState('');
+    const [emotion, setEmotion] = useState('');
+    const [notes, setNotes] = useState('');
+    const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+
+    const canSave = symbol && entry && size;
+
+    const submit = () => {
+      const e = parseFloat(entry) || 0;
+      const x = parseFloat(exit) || 0;
+      const s = parseFloat(size) || 0;
+      const sl = parseFloat(stop) || 0;
+      const tp = parseFloat(target) || 0;
+      const closed = !!exit;
+      let pnl = 0;
+      if (closed) {
+        pnl = direction === 'long' ? (x - e) * s : (e - x) * s;
+      }
+      const risk = sl ? Math.abs(e - sl) * s : 0;
+      const reward = tp ? Math.abs(tp - e) * s : 0;
+      const rr = risk > 0 ? (reward / risk) : 0;
+      onSave({
+        symbol: symbol.toUpperCase(),
+        direction, entry: e, exit: closed ? x : null,
+        size: s, stop: sl || null, target: tp || null,
+        emotion, notes, date, pnl, rr, closed
+      });
+    };
+
+    return (
+      <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold">Шинэ арилжаа</h2>
+          <button onClick={onCancel} className="text-slate-400 hover:text-white"><X size={20} /></button>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs text-slate-400">Хөрөнгө (Symbol)</label>
+            <input value={symbol} onChange={e => setSymbol(e.target.value)} placeholder="EURUSD, BTC, AAPL..."
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+          <div>
+            <label className="text-xs text-slate-400">Огноо</label>
+            <input type="date" value={date} onChange={e => setDate(e.target.value)}
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+        </div>
+        <div>
+          <label className="text-xs text-slate-400 mb-1 block">Чиглэл</label>
+          <div className="grid grid-cols-2 gap-2">
+            <button onClick={() => setDirection('long')}
+              className={`py-2 rounded-lg font-medium flex items-center justify-center gap-2 ${direction === 'long' ? 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300' : 'bg-slate-900 border border-slate-700 text-slate-400'}`}>
+              <ArrowUp size={16} /> Long
+            </button>
+            <button onClick={() => setDirection('short')}
+              className={`py-2 rounded-lg font-medium flex items-center justify-center gap-2 ${direction === 'short' ? 'bg-red-500/20 border border-red-500/40 text-red-300' : 'bg-slate-900 border border-slate-700 text-slate-400'}`}>
+              <ArrowDown size={16} /> Short
+            </button>
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <div>
+            <label className="text-xs text-slate-400">Орох үнэ *</label>
+            <input type="number" step="any" value={entry} onChange={e => setEntry(e.target.value)}
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+          <div>
+            <label className="text-xs text-slate-400">Гарах үнэ</label>
+            <input type="number" step="any" value={exit} onChange={e => setExit(e.target.value)} placeholder="хоосон = нээлттэй"
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+          <div>
+            <label className="text-xs text-slate-400">Хэмжээ *</label>
+            <input type="number" step="any" value={size} onChange={e => setSize(e.target.value)}
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-3">
+          <div>
+            <label className="text-xs text-slate-400">Stop Loss</label>
+            <input type="number" step="any" value={stop} onChange={e => setStop(e.target.value)}
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+          <div>
+            <label className="text-xs text-slate-400">Take Profit</label>
+            <input type="number" step="any" value={target} onChange={e => setTarget(e.target.value)}
+              className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40" />
+          </div>
+        </div>
+        <div>
+          <label className="text-xs text-slate-400">Сэтгэл хөдлөл</label>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {['Тайван', 'Итгэлтэй', 'Айдас', 'Шунал', 'Уур', 'Дарамт'].map(em => (
+              <button key={em} onClick={() => setEmotion(emotion === em ? '' : em)}
+                className={`px-3 py-1.5 rounded-lg text-sm border ${emotion === em ? 'bg-white text-zinc-900 border-white' : 'bg-slate-900 border-slate-700 text-slate-300 hover:border-white/30'}`}>
+                {em}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label className="text-xs text-slate-400">Тэмдэглэл / Сургамж</label>
+          <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={3} placeholder="Setup, шалтгаан, сургамж..."
+            className="w-full mt-1 px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white outline-none focus:border-white/40 resize-none" />
+        </div>
+        <div className="flex gap-2 pt-2">
+          <button onClick={submit} disabled={!canSave}
+            className="flex-1 py-3 bg-white hover:bg-zinc-200 text-zinc-900 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed rounded-xl font-bold">
+            Хадгалах
+          </button>
+          <button onClick={onCancel}
+            className="px-5 py-3 bg-slate-800 hover:bg-slate-700 rounded-xl font-medium">
+            Цуцлах
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   // Group lessons by level
   const lessonsByLevel = lessons.reduce((acc, l) => {
     if (!acc[l.level]) acc[l.level] = [];
@@ -1128,6 +1274,7 @@ export default function TradingApp() {
             <NavButton icon={BookOpen} label="Хичээлүүд" target="lessons" />
             <NavButton icon={Library} label="Номын сан" target="library" />
             <NavButton icon={Calculator} label="Тооцоологчид" target="calc" />
+            <NavButton icon={NotebookPen} label="Журнал" target="journal" />
             <NavButton icon={FileText} label="Нэр томъёо" target="glossary" />
             <NavButton icon={Award} label="Прогресс" target="progress" />
           </nav>
@@ -1572,6 +1719,138 @@ export default function TradingApp() {
                 </div>
               </div>
             )}
+
+            {/* JOURNAL */}
+            {view === 'journal' && (() => {
+              const closedTrades = trades.filter(t => t.closed);
+              const winners = closedTrades.filter(t => t.pnl > 0);
+              const losers = closedTrades.filter(t => t.pnl < 0);
+              const totalPnl = closedTrades.reduce((s, t) => s + (t.pnl || 0), 0);
+              const winRate = closedTrades.length > 0 ? Math.round((winners.length / closedTrades.length) * 100) : 0;
+              const avgRR = closedTrades.length > 0
+                ? (closedTrades.reduce((s, t) => s + (t.rr || 0), 0) / closedTrades.length).toFixed(2)
+                : '0.00';
+              return (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h1 className="text-3xl font-black">Арилжааны журнал</h1>
+                    {!addingTrade && (
+                      <button onClick={() => setAddingTrade(true)}
+                        className="px-4 py-2 bg-white hover:bg-zinc-200 text-zinc-900 rounded-xl font-bold flex items-center gap-2 text-sm">
+                        <Plus size={16} /> Шинэ
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-slate-400 mb-6">Арилжаагаа бүртгэж сургамж тэмдэглэ</p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4">
+                      <div className="text-xs text-slate-400">Нийт</div>
+                      <div className="text-2xl font-bold mt-1">{trades.length}</div>
+                    </div>
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4">
+                      <div className="text-xs text-slate-400">Win Rate</div>
+                      <div className="text-2xl font-bold mt-1">{winRate}%</div>
+                    </div>
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4">
+                      <div className="text-xs text-slate-400">Нийт P&L</div>
+                      <div className={`text-2xl font-bold mt-1 ${totalPnl > 0 ? 'text-emerald-400' : totalPnl < 0 ? 'text-red-400' : 'text-white'}`}>
+                        {totalPnl > 0 ? '+' : ''}{totalPnl.toFixed(2)}
+                      </div>
+                    </div>
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4">
+                      <div className="text-xs text-slate-400">Дундаж R:R</div>
+                      <div className="text-2xl font-bold mt-1">1 : {avgRR}</div>
+                    </div>
+                  </div>
+
+                  {addingTrade && (
+                    <div className="mb-5">
+                      <TradeForm
+                        onCancel={() => setAddingTrade(false)}
+                        onSave={(trade) => { addTrade(trade); setAddingTrade(false); }}
+                      />
+                    </div>
+                  )}
+
+                  {trades.length === 0 && !addingTrade ? (
+                    <div className="bg-slate-800/40 border border-slate-700 rounded-2xl p-10 text-center">
+                      <NotebookPen size={40} className="text-slate-500 mx-auto mb-3" strokeWidth={1.5} />
+                      <div className="text-slate-400 mb-1">Журнал хоосон байна</div>
+                      <div className="text-sm text-slate-500 mb-4">Эхний арилжаагаа бүртгэж эхэл</div>
+                      <button onClick={() => setAddingTrade(true)}
+                        className="px-5 py-2 bg-white hover:bg-zinc-200 text-zinc-900 rounded-xl font-bold inline-flex items-center gap-2">
+                        <Plus size={16} /> Шинэ арилжаа
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {trades.map(t => (
+                        <div key={t.id} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 sm:p-5">
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${t.direction === 'long' ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : 'bg-red-500/15 text-red-300 border border-red-500/30'}`}>
+                                {t.direction === 'long' ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
+                              </div>
+                              <div className="min-w-0">
+                                <div className="font-bold truncate">{t.symbol}</div>
+                                <div className="text-xs text-slate-500">{t.date} · {t.direction === 'long' ? 'Long' : 'Short'}{!t.closed && ' · Нээлттэй'}</div>
+                              </div>
+                            </div>
+                            <button onClick={() => deleteTrade(t.id)} className="text-slate-500 hover:text-red-400 p-1">
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm mb-3">
+                            <div>
+                              <div className="text-xs text-slate-500">Entry</div>
+                              <div className="font-medium">{t.entry}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-slate-500">Exit</div>
+                              <div className="font-medium">{t.exit ?? '—'}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-slate-500">SL / TP</div>
+                              <div className="font-medium text-xs">{t.stop ?? '—'} / {t.target ?? '—'}</div>
+                            </div>
+                            <div>
+                              <div className="text-xs text-slate-500">Хэмжээ</div>
+                              <div className="font-medium">{t.size}</div>
+                            </div>
+                          </div>
+
+                          {t.closed && (
+                            <div className="flex flex-wrap gap-2 mb-2">
+                              <div className={`px-3 py-1.5 rounded-lg text-sm font-bold ${t.pnl > 0 ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' : t.pnl < 0 ? 'bg-red-500/15 text-red-300 border border-red-500/30' : 'bg-slate-700/50 text-slate-300'}`}>
+                                {t.pnl > 0 ? '+' : ''}{t.pnl.toFixed(2)} P&L
+                              </div>
+                              {t.rr > 0 && (
+                                <div className="px-3 py-1.5 rounded-lg text-sm bg-slate-900/50 border border-slate-700 text-slate-300">
+                                  R:R 1 : {t.rr.toFixed(2)}
+                                </div>
+                              )}
+                              {t.emotion && (
+                                <div className="px-3 py-1.5 rounded-lg text-sm bg-slate-900/50 border border-slate-700 text-slate-300">
+                                  {t.emotion}
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {t.notes && (
+                            <div className="text-sm text-slate-400 mt-2 border-t border-slate-700/50 pt-2">
+                              {t.notes}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
           </div>
         </main>
       </div>
