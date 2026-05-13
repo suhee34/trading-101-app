@@ -1099,9 +1099,6 @@ export default function TradingApp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white">
-      <div className="bg-amber-500/10 border-b border-amber-500/30 px-4 py-2 text-center text-xs text-amber-200">
-        ⚠️ Боловсролын зорилготой. Арилжаа эрсдэлтэй — өөрийн хариуцлагаар хийгээрэй.
-      </div>
 
       <div className="flex min-h-screen relative">
         {/* Mobile menu overlay */}
